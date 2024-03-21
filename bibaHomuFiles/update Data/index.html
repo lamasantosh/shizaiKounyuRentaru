@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- Metro UI -->
+    <!-- <link rel="stylesheet" href="https://cdn.metroui.org.ua/current/metro.css"> -->
+    <?!= include('style'); ?>
+    <style>
+      .custom-margin-bottom-label{
+        margin-bottom: .5rem;
+        font-weight:600;
+        display:block;
+      }
+      .c-margin-bottom{
+        margin-bottom: .5rem;
+      }
+      @media screen and (min-width: 768px) {
+      .container-small{
+        width:700px;
+        margin:0 auto;
+      }
+      }
+    </style>
+    <style>
+    .spinner {
+      position: fixed;
+      z-index: 9999;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .lds-dual-ring {
+      display: inline-block;
+      width: 80px;
+      height: 80px;
+    }
+
+    .lds-dual-ring:after {
+      content: " ";
+      display: block;
+      width: 64px;
+      height: 64px;
+      margin: 8px;
+      border-radius: 50%;
+      border: 6px solid #3498db;
+      border-color: #3498db transparent #3498db transparent;
+      animation: lds-dual-ring 1.2s linear infinite;
+    }
+
+    @keyframes lds-dual-ring {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="grid">
+        <div class="row mb-5" >
+          <div class="cell" style="text-align:center;">
+            <div class="card" style="background-color:#095AA9;color:#ffffff;">
+              <h1 style="padding:.5rem;">資材購入レンタル</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Overlay with loading spinner -->
+    <div class="overlay" id="overlay">
+      <div class="spinner">
+        <!-- Loading spinner without image -->
+        <div class="lds-dual-ring"></div>
+      </div>
+    </div>
+    <div class="container-small">
+    <!-- content here -->
+      <!-- Grouping rows -->
+      <div class="grid" id="whole-contact-wrap">
+          <div class="row p-5 mb-5" style="border:1px solid #bcbcbc;">
+              <div class="cell">
+                <?!= include('bibaHomuUpdateForm'); ?>
+              </div>
+          </div>
+      </div>
+      <div class="row p-5 d-none" id="success-message" style="border:1px solid #bcbcbc;">
+        <div class="cell flex-align-self-center">
+          <h3>フォームを送信していただきありがとうございます</h3>
+          <button id="back-to-form">後ろへフォーム</button>
+        </div>
+      </div>
+      <div class="row d-none" id="progress">
+        <div class="cell">
+            <div data-role="progress" data-type="line"></div>
+            <div data-role="progress" data-type="line" data-small="true"></div>
+        </div>
+      </div>
+    </div>
+    <!-- Metro UI -->
+    <!-- <script src="https://cdn.metroui.org.ua/current/metro.js"></script> -->
+    <?!= include('script'); ?>
+    <script>
+      var formData = <?= JSON.stringify(formData) ?>;
+      console.log(formData);
+      if(formData != 'null'){
+        console.log('inside null');
+        // Remove square brackets and double quotes, then split by commas
+        var formDataArray = formData.replace(/[\[\]"]/g, '').split(',')
+        
+        for(let i=0; i<formDataArray.length; i++){
+          console.log('formDataArray ' + i + ':' + formDataArray[i]);
+        }
+        console.log('formDataArray.length' + formDataArray.length);
+        document.getElementById('formId').value = formDataArray[0] || '';
+        document.getElementById('shiyouBi').value = formDataArray[1] || '';
+        document.getElementById('konyuHidzuke').value = formDataArray[2] || '';
+        document.getElementById('shiyouBasho').value = formDataArray[3] || '';
+        document.getElementById('koujiBangou').value = formDataArray[4] || '';
+        document.getElementById('shiyouSouko').value = formDataArray[5] || '';
+        document.getElementById('kingaku').value = formDataArray[6] || '';
+        document.getElementById('denpyouBango').value = formDataArray[7] || '';
+        document.getElementById('shiyouTenpo').value = formDataArray[8] || '';
+        document.getElementById('shiyoSya').value = formDataArray[9] || '';
+        document.getElementById('holdPreviousFileLink').href = formDataArray[11] || '';
+      }
+    </script>
+    <script>
+        // Show the overlay when needed
+        function showOverlay() {
+          document.getElementById('overlay').style.display = 'block';
+        }
+        // Hide the overlay when done processing
+        function hideOverlay() {
+          document.getElementById('overlay').style.display = 'none';
+        }
+        hideOverlay();
+    </script>
+    <?!= include('bibaScript'); ?>
+  </body>
+</html>

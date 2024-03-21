@@ -1,0 +1,1 @@
+<h3 style="padding-bottom:.5rem;border-bottom:1px solid #ddd5d5f5;">資材購入レンタルフォーム</h3>
