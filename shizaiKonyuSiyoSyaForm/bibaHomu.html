@@ -1,0 +1,62 @@
+<h3 style="padding-bottom:.5rem;border-bottom:1px solid #ddd5d5f5;">ビバホームフォーム</h3>
+<form id="contact-form" data-role="validator" action="javascript:"
+      data-on-submit="addBibaHomuRecord">
+  <div class="row c-margin-bottom">
+    <div class="cell">
+        <span class="custom-margin-bottom-label">伝票番号:</span>
+        <select id="denpyouBango" data-role="select" name="denpyouBango" data-validate="required required not=''">
+            <optgroup label="伝票番号リスト:">
+                <!-- Options will be dynamically added here -->
+            </optgroup>
+        </select>
+    </div>
+  </div>
+  <div class="row c-margin-bottom">
+    <div class="cell">
+      <div class="form-group">
+        <span class="custom-margin-bottom-label">使用日:</span>
+        <input type="text" data-role="calendarpicker" data-dialog-mode="true" id="shiyouBi" name="shiyouBi" data-validate="required">
+         <span class="invalid_feedback">
+                使用日は必須です。
+          </span>
+      </div>
+    </div>
+  </div>
+  <!--使用場所の始まり-->
+  <div class="row c-margin-bottom" style="padding:.5rem;border:1px solid #bcbcbc;">
+    <div class="cell">
+      <div class="row c-margin-bottom">
+        <div class="cell">
+          <span class="custom-margin-bottom-label">使用場所:</span>
+          <input type="text" class="metro-input" id="shiyouBasho" name="shiyouBasho"/>
+        </div>
+      </div>
+      <div class="row c-margin-bottom">
+        <div class="cell">
+          <span class="custom-margin-bottom-label">工事番号:</span>
+          <input type="text" class="metro-input" id="koujiBangou" name="koujiBangou" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row c-margin-bottom">
+    <div class="cell">
+      <span class="custom-margin-bottom-label">使用者:</span>
+      <input type="text" class="metro-input" id="shiyoSya" name="shiyoSya">
+    </div>
+  </div>
+  <!-- File upload section -->
+  <div class="row c-margin-bottom" style="border-bottom:1px solid #bcbcbc;padding-bottom:2rem;">
+      <div class="cell">
+        <span class="custom-margin-bottom-label">レシートの写真を添付（その場でカメラで撮ったものを添付）:</span>
+        <input type="file" data-role="file" data-button-title="アップロード" id="bibaHomutenpuFile" name="bibaHomutenpuFile">
+      </div>
+  </div>
+  <div class="row c-margin-bottom">
+    <div class="cell" style="text-align:center;">
+      <div class="form-group">
+        <button class="button primary" style="padding:0rem 2rem;">送信</button>
+      </div>
+    </div>
+  </div>
+</form>
