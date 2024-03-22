@@ -1,0 +1,109 @@
+<h3 style="padding-bottom:.5rem;border-bottom:1px solid #ddd5d5f5;">資材購入レンタル(その他)フォーム</h3>
+<form id="contact-form" data-role="validator" action="javascript:"
+      data-on-submit="addSonotaRecord">
+  <div class="row c-margin-bottom">
+    <div class="cell">
+      <div class="form-group">
+        <span class="custom-margin-bottom-label">購入日付:</span>
+        <input type="text" data-role="calendarpicker" data-dialog-mode="true" id="konyuHidzuke" name="konyuHidzuke" data-validate="required">
+        <span class="invalid_feedback">
+            購入日付:
+        </span>
+      </div>
+    </div>
+  </div>
+  <!--使用期間-->
+  <div class="row c-margin-bottom">
+    <div class="cell">
+      <div class="form-group">
+        <span class="custom-margin-bottom-label">使用期間開始日:</span>
+        <input type="text" data-role="calendarpicker" data-dialog-mode="true" id="shiyouBistartDate" name="shiyouBistartDate" data-validate="required">
+        <span class="invalid_feedback">
+          使用期間開始日は必須です。
+        </span>
+      </div>
+    </div>
+    <div class="cell">
+      <div class="form-group">
+        <span class="custom-margin-bottom-label">使用期間終了日:</span>
+        <input type="text" data-role="calendarpicker" data-dialog-mode="true" id="shiyouBiendDate" name="shiyouBiendDate" data-validate="required">
+        <span class="invalid_feedback">
+          使用期間終了日は必須です。
+        </span>
+      </div>
+    </div>
+  </div>
+  <!--仕入先-->
+  <div class="row c-margin-bottom">
+    <div class="cell">
+        <span class="custom-margin-bottom-label">仕入先（購入レンタル会社）:</span>
+        <input type="text" class="metro-input" id="shiireSaki" name="shiireSaki" data-validate="required"/>
+    </div>
+  </div>
+  <!--使用場所の始まり-->
+  <div class="row c-margin-bottom" style="padding:.5rem;border:1px solid #bcbcbc;">
+    <div class="cell">
+      <div class="row c-margin-bottom">
+        <div class="cell">
+          <span class="custom-margin-bottom-label">使用場所:</span>
+          <input type="text" class="metro-input" id="shiyouBasho" name="shiyouBasho"/>
+        </div>
+      </div>
+      <div class="row c-margin-bottom">
+        <div class="cell">
+          <span class="custom-margin-bottom-label">工事番号:</span>
+          <input type="text" class="metro-input" id="koujiBangou" name="koujiBangou" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--稟議№-->
+  <div class="row c-margin-bottom">
+    <div class="cell">
+      <span class="custom-margin-bottom-label">稟議№ (稟議申請している場合):</span>
+      <input type="text" class="metro-input" id="ringiNo" name="ringiNo" />
+    </div>
+  </div>
+  <!--内容-->
+  <div class="row c-margin-bottom" style="padding:.5rem;border:1px solid #bcbcbc;">
+    <div class="cell">
+      <div class="row c-margin-bottom">
+        <div class="cell">
+          <span style="display:block;border-bottom:2px solid #bcbcbc;font-size:1.2rem;font-weight:600;">--内容--</span>
+        </div>
+      </div>
+      <div class="row c-margin-bottom">
+        <div class="cell">
+          <span class="custom-margin-bottom-label">買った物は何か:</span>
+          <input type="text" class="metro-input" id="NaiyoukattaMono" name="NaiyoukattaMono"/>
+        </div>
+      </div>
+      <div class="row c-margin-bottom">
+        <div class="cell">
+          <span class="custom-margin-bottom-label">何に使うものか:</span>
+          <input type="text" class="metro-input" id="naiyouNaniTsukau" name="naiyouNaniTsukau" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row c-margin-bottom">
+    <div class="cell">
+      <span class="custom-margin-bottom-label">金額:</span>
+      <input type="text" class="metro-input" id="kingaku" name="kingaku"/>
+    </div>
+  </div>
+  <!-- File upload section -->
+  <div class="row c-margin-bottom" style="border-bottom:1px solid #bcbcbc;padding-bottom:2rem;">
+      <div class="cell">
+        <span class="custom-margin-bottom-label">レシートの写真を添付（その場でカメラで撮ったものを添付）:</span>
+        <input type="file" data-role="file" data-button-title="アップロード" id="bibaHomutenpuFile" name="bibaHomutenpuFile">
+      </div>
+  </div>
+  <div class="row c-margin-bottom">
+    <div class="cell" style="text-align:center;">
+      <div class="form-group">
+        <button class="button primary" style="padding:0rem 2rem;">送信</button>
+      </div>
+    </div>
+  </div>
+</form>
