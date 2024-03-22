@@ -1,0 +1,48 @@
+<script>
+  const wholeFormWrap = document.getElementById("whole-contact-wrap");
+  const contactForm = document.getElementById("contact-form");
+  const successMessage = document.getElementById("success-message");
+  const backToForm = document.getElementById("back-to-form");
+  const progress = document.getElementById("progress");
+
+  contactForm.addEventListener("submit", submitBibaHomuData);
+
+  function submitBibaHomuData(e){
+    e.preventDefault();
+  }
+  function addfirstBibaHomuRecord(){
+    wholeFormWrap.classList.add("d-none");
+    progress.classList.remove("d-none");
+    const formData = constructFormData();
+    console.log('formData' , formData);
+    //Pass formData to Google Apps Script 
+    google.script.run
+    .withSuccessHandler(() => {
+      // Reset form and show success message
+      contactForm.reset();
+      successMessage.classList.remove("d-none");
+      progress.classList.add("d-none");
+    })
+    .withFailureHandler(() => {
+      // Handle failure
+      console.error("Error occurred while submitting form.");
+      alert("Error occurred while submitting form.");
+      progress.classList.add("d-none");
+    })
+    .acceptFirstFormData(formData);
+    
+  }
+  function constructFormData(){
+    return {
+      konyuHidzuke: document.getElementById("konyuHidzuke").value,
+      kingaku: document.getElementById("kingaku").value,
+      denpyouBango: document.getElementById("denpyouBango").value,
+      shiyouTenpo: document.getElementById("shiyouTenpo").value,
+    }
+  }
+
+    backToForm.addEventListener("click", () => {
+    wholeFormWrap.classList.remove("d-none");
+    successMessage.classList.add("d-none");
+  });
+</script>
