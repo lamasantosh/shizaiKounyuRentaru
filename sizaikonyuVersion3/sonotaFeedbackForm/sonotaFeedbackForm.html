@@ -1,0 +1,40 @@
+<h3 style="padding-bottom:.5rem;border-bottom:1px solid #ddd5d5f5;">購入レンタルフェッドバックフォーム</h3>
+<form id="contact-form" data-role="validator" action="javascript:"
+      data-on-submit="addFeedbackSonota">
+  <div class="row">
+    <div class="cell">
+      <!-- Other form fields go here -->
+      <input type="hidden" id="formId" name="formId">
+    </div>
+  </div>
+  <div class="row">
+    <div class="cell">
+      <span class="custom-margin-bottom-label">購入レンタルを:</span>
+    </div>
+  </div>
+  <div class="row c-margin-bottom" style="border-bottom:1px solid #bcbcbc;padding-bottom:1rem;marign-bottom:2rem;">
+    <div class="cell">
+      <label class="input-control radio">
+        <input type="radio" name="syoninSimasu" id="syonin" data-role="radio">
+        <span class="caption">承認します</span>
+      </label>
+      <label class="input-control radio">
+        <input type="radio" name="syoninSimasu" id="kyakka" data-role="radio">
+        <span class="caption">却下します</span>
+      </label>
+    </div>
+  </div>
+  <div class="row c-margin-bottom d-none" id="comment-wrap">
+    <div class="cell">
+      <label for="comment" style="display:block;magin-bottom:1rem;font-weight:600;">コメント:</label>
+      <textarea data-role="textarea" name="comment" id="comment"></textarea>
+    </div>
+  </div>
+  <div class="row c-margin-bottom">
+    <div class="cell" style="text-align:center;">
+      <div class="form-group">
+        <button class="button primary" style="padding:0rem 2rem;">送信</button>
+      </div>
+    </div>
+  </div>
+</form>

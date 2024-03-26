@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+  </head>
+  <body>
+    <table>
+      <thread>
+      </thread>
+      <tbody>
+        <tr>
+          <td style="font-weight:600;color: #4169e1;">購入レンタルその他は:</td>
+        </tr>
+        <tr>
+          <td><?= handanResult ?></td>
+        </tr>
+        <? if(comment != '') { ?>
+          <tr>
+            <td style="font-weight:600;color: #4169e1;">コメント:</td>
+          </tr>
+          <tr>
+            <td><?= comment ?></td>
+          </tr>
+        <? } ?>
+        <tr>
+          <td style="font-weight:500;color: #4169e1;width:20%;">採番:</td>
+          <td><?= saiban ?></td>
+        </tr>
+        <? if(konyuHidzukeSonota != ''){ ?>
+          <tr>
+            <td style="font-weight:500;color: #4169e1;width:20%;">購入日:</td>
+            <td><?= konyuHidzukeSonota ?></td>
+          </tr>
+        <? } ?>
+        <? if(shiyouBistartDate != ''){ ?>
+          <tr>
+            <td style="font-weight:500;color: #4169e1;width:20%;">使用期間開始日:</td>
+            <td><?= shiyouBistartDate ?></td>
+          </tr>
+        <? } ?>
+        <? if(shiyouBiendDate != ''){ ?>
+          <tr>
+            <td style="font-weight:500;color: #4169e1;width:20%;">使用期間終了日:</td>
+            <td><?= shiyouBiendDate ?></td>
+          </tr>
+        <? } ?>
+
+        <? if(shiireSakiSonota != '') { ?>
+          <tr>
+            <td style="font-weight:500;color: #4169e1;width:20%;">仕入先:</td>
+            <td><?= shiireSakiSonota ?></td>
+          </tr>
+        <? } ?>
+
+        <? if(shiyouBashoSonota != '') { ?>
+          <tr>
+            <td style="font-weight:500;color: #4169e1;width:20%;">使用場所:</td>
+            <td><?= shiyouBashoSonota ?></td>
+          </tr>
+        <? } ?>
+
+        <? if(koujiBangouSonota != '') { ?>
+          <tr>
+            <td style="font-weight:500;color: #4169e1;width:20%;">工事番号:</td>
+            <td><?= koujiBangouSonota ?></td>
+          </tr>
+        <? } ?>
+
+        <? if(ringiNoSonota != '') { ?>
+        <tr>
+          <td style="font-weight:500;color: #4169e1;width:20%">稟議№:</td>
+          <td><?= ringiNoSonota ?></td>
+        </tr>
+        <? } ?>
+
+         <? if(naiyouKattaMono != '') { ?>
+        <tr>
+          <td style="font-weight:500;color: #4169e1;width:20%;">買った物は何か:</td>
+          <td><?= naiyouKattaMono ?></td>
+        </tr>
+         <? } ?>
+        <? if(naiyouNaniTsukau != '') { ?>
+        <tr>
+          <td style="font-weight:500;color: #4169e1;width:20%;">何に使うものか:</td>
+          <td><?= naiyouNaniTsukau ?></td>
+        </tr>
+         <? } ?>
+
+        <? if(kingakuSonota != '') { ?>
+           <tr>
+            <td style="font-weight:500;color: #4169e1;width:20%;">金額:</td>
+            <td><?= kingakuSonota ?></td>
+           </tr>
+        <? } ?>
+
+        <? if(tempuFileSonota != '' && tempuFileSonota != 'null') { ?>
+          <tr>
+          <td style="font-weight:500;color: #4169e1;width:20%;">ビバファイルurl:</td>
+          <td><?= tempuFileSonota ?></td>
+          </tr>
+        <? } ?>
+        <? if(handanResult == '承認します') { ?>
+          <tr>
+            <td colspan="2" style="padding-top: 10px;font-weight:600;">下記リンクから承認お願いします。</td>
+          </tr>
+          <tr>
+            <td colspan="2">https://docs.google.com/spreadsheets/d/1-nBPPN7Om-L0LhJ4i7gcR0KF4vESgp7XAuCRotg80DQ/ </td>
+          </tr>
+        <? }else{ ?>
+          <tr>
+            <td colspan="2" style="padding-top: 10px;font-weight:600;"></td>
+          </tr>
+          <tr>
+            <td colspan="2"><?= updateUrl ?></td>
+          </tr>
+        <? } ?>
+      </tbody>
+    </table>
+  </body>
+</html>
