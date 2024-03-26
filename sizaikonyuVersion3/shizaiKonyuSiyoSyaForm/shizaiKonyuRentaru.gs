@@ -32,39 +32,47 @@ function uploadBibaHomuFile(file){
     return {url: fileUrl, name: fileName};
 }
 function acceptBibaHomuData(formData){
-  //first Spreadsheet which will hold all bibahomu record including new respnse form id,name,url
+  //first Spreadsheet which will hold all bibahomu record including new response form id,name,url
   var spreadsheetBibaHomu = SpreadsheetApp.openById('1eTquTEPg7nmC2DzG3Dxx3YZJtwFyKFtRHvhFEGIyc2s');
   SpreadsheetApp.flush();
   var bibaHomuSheet1 = spreadsheetBibaHomu.getSheetByName("ビバホームレコードシート1");
   var bibaHomuSheet1LastRow = bibaHomuSheet1.getLastRow();
   Logger.log('bibaHomuSheet1LastRow' + bibaHomuSheet1LastRow);
-
-  var denpyouBangoColumnValues = bibaHomuSheet1.getRange(1,5,bibaHomuSheet1LastRow).getValues();
-  var denpyouBangoArray = [];
-  denpyouBangoArray = denpyouBangoColumnValues.flat().map(String);
-
-  Logger.log('denpyouBangoColumnValues' + denpyouBangoArray);
-  Logger.log(typeof denpyouBangoArray);
-  denpyouBangoArray.forEach(obj => Logger.log('object' + obj));
-  denpyouBangoNumber = 
-  Logger.log(denpyouBangoArray.indexOf(formData.denpyouBango));
-  var indexofDenpyouBango = denpyouBangoArray.indexOf(formData.denpyouBango);
-  Logger.log('index of denpyou Bango' + indexofDenpyouBango);
+  
   //second spreadsheet which will only hold the required data
   var spreadsheetBibaHomuFinal = SpreadsheetApp.openById('161ZNhcmsaHP9L_zbA8DLPwtMivrhA2g3I91_tAXc-tc');
   SpreadsheetApp.flush();
   var bibaHomufinalSheet = spreadsheetBibaHomuFinal.getSheetByName("ビバホームシート");
   var bibaHomufinalSheetLastRow = bibaHomufinalSheet.getLastRow();
-  Logger.log('bibaHomufinalSheetLastRow' + bibaHomufinalSheetLastRow);
+
+  //look whether that denpyou bango is filled or selected
+  var searchDenpyouBango;
+  if(formData.denpyouBangoSelect == '伝票番号無し'){
+    searchDenpyouBango = formData.denpyouBangoFill;
+  }else{
+    searchDenpyouBango = formData.denpyouBangoSelect;
+  }
+
+  let denpyouBangoColumnValues = bibaHomuSheet1.getRange(1,5,bibaHomuSheet1LastRow).getValues();
+  let denpyouBangoArray = [];
+  denpyouBangoArray = denpyouBangoColumnValues.flat().map(String);
+  denpyouBangoArray.forEach(obj => Logger.log('object' + obj));
+
+  if(denpyouBangoArray.indexOf(searchDenpyouBango) != -1){
+    bibaHomuSheet1LastRow = denpyouBangoArray.indexOf(searchDenpyouBango);
+    bibaHomufinalSheetLastRow = denpyouBangoArray.indexOf(searchDenpyouBango);
+    bibaHomuSheet1.getRange('D' + (bibaHomuSheet1LastRow + 1)).setValue('FULL');  
+  }else{
+     bibaHomuSheet1.getRange('D' + (bibaHomuSheet1LastRow + 1)).setValue('AVAIL'); 
+  }
 
   //accessing the other sheet
   const ssLinkedSheet = spreadsheetBibaHomu.getSheetByName("ssLinked");
 
-  const htmlTemplate = HtmlService.createTemplateFromFile("mailToHomBuchyo");
   //to get last row
-  // bibaHomuSheet1.getRange('A' + (bibaHomuSheet1LastRow + 1)).setNumberFormat('@STRING@');
-  // bibaHomufinalSheet.getRange('A' + (bibaHomufinalSheetLastRow + 1)).setNumberFormat('@STRING@');
-  // var formattedSaiban = formatNumberWithLeadingZeros(bibaHomuSheet1LastRow, 5).toString();
+  bibaHomuSheet1.getRange('A' + (bibaHomuSheet1LastRow + 1)).setNumberFormat('@STRING@');
+  bibaHomufinalSheet.getRange('A' + (bibaHomufinalSheetLastRow + 1)).setNumberFormat('@STRING@');
+  var formattedSaiban = formatNumberWithLeadingZeros(bibaHomuSheet1LastRow, 5).toString();
 
   //Get the User's email address
   const respondentEmail = Session.getActiveUser().getEmail();
@@ -94,52 +102,69 @@ function acceptBibaHomuData(formData){
   // Get the file URL from the formData object
   const bibaFileUrl = formData.bibaHomutenpuFile.url;
   
-  seibanValue = bibaHomuSheet1.getRange('A' + (indexofDenpyouBango + 1)).getValue();
-  konyuHidzukeValue = bibaHomuSheet1.getRange('B' + (indexofDenpyouBango + 1)).getValue();
-  kingakuValue = bibaHomuSheet1.getRange('C' + (indexofDenpyouBango + 1)).getValue();
-  shiyouTenpoValue = bibaHomuSheet1.getRange('F' + (indexofDenpyouBango + 1)).getValue();
 
-  //send to create Html template to send through gmail
-  htmlTemplate.saiban = seibanValue;
-  htmlTemplate.konyuHidzuke = konyuHidzukeValue;
-  htmlTemplate.kingaku = kingakuValue;
-  htmlTemplate.denpyouBango = formData.denpyouBango;
-  htmlTemplate.shiyouTenpo = shiyouTenpoValue;
-  htmlTemplate.shiyouBi = formData.shiyouBi;
-  htmlTemplate.shiyouBasho = formData.shiyouBasho;
-  htmlTemplate.koujiBangou = formData.koujiBangou;
-  htmlTemplate.shiyoSya = formData.shiyoSya;
-  htmlTemplate.respondentEmail = respondentEmail;
-  htmlTemplate.bibaFileUrl = bibaFileUrl;
-  htmlTemplate.formUrl = formUrl;
-
-  bibaHomuSheet1.getRange('G' + (indexofDenpyouBango + 1)).setValue(formData.shiyouBi);
-  bibaHomuSheet1.getRange('H' + (indexofDenpyouBango + 1)).setValue(formData.shiyouBasho);
-  bibaHomuSheet1.getRange('I' + (indexofDenpyouBango + 1)).setValue(formData.koujiBangou); 
-  bibaHomuSheet1.getRange('J' + (indexofDenpyouBango + 1)).setValue(formData.shiyoSya);
-  bibaHomuSheet1.getRange('K' + (indexofDenpyouBango + 1)).setValue(respondentEmail);
-  bibaHomuSheet1.getRange('L' + (indexofDenpyouBango + 1)).setValue(bibaFileUrl);
-  bibaHomuSheet1.getRange('M' + (indexofDenpyouBango + 1)).setValue(formId2);
-  bibaHomuSheet1.getRange('N' + (indexofDenpyouBango + 1)).setValue(visibleSheetName.getName());
-  bibaHomuSheet1.getRange('O' + (indexofDenpyouBango + 1)).setValue(formUrl);
-  bibaHomuSheet1.getRange('P' + (indexofDenpyouBango + 1)).setValue('承認待ち');
   
+  if(formData.denpyouBangoSelect == '伝票番号無し'){
+    bibaHomuSheet1.getRange('E' + (bibaHomuSheet1LastRow + 1)).setValue(formData.denpyouBangoFill);   
+  }else{
+    bibaHomuSheet1.getRange('E' + (bibaHomuSheet1LastRow + 1)).setValue(formData.denpyouBangoSelect);
+  }
+  bibaHomuSheet1.getRange('G' + (bibaHomuSheet1LastRow + 1)).setValue(formData.shiyouBasho);
+  bibaHomuSheet1.getRange('H' + (bibaHomuSheet1LastRow + 1)).setValue(formData.koujiBangou); 
+  bibaHomuSheet1.getRange('I' + (bibaHomuSheet1LastRow + 1)).setValue(formData.shiyoSya);
+  bibaHomuSheet1.getRange('J' + (bibaHomuSheet1LastRow + 1)).setValue(respondentEmail);
+  bibaHomuSheet1.getRange('K' + (bibaHomuSheet1LastRow + 1)).setValue(bibaFileUrl);
+  bibaHomuSheet1.getRange('L' + (bibaHomuSheet1LastRow + 1)).setValue(formId2);
+  bibaHomuSheet1.getRange('M' + (bibaHomuSheet1LastRow + 1)).setValue(visibleSheetName.getName());
+  bibaHomuSheet1.getRange('N' + (bibaHomuSheet1LastRow + 1)).setValue(formUrl);
+  bibaHomuSheet1.getRange('O' + (bibaHomuSheet1LastRow + 1)).setValue('承認待ち');
+  
+  if(formData.denpyouBangoSelect == '伝票番号無し'){
+    bibaHomufinalSheet.getRange('D' + (bibaHomufinalSheetLastRow + 1)).setValue(formData.denpyouBangoFill);  
+  }else{
+    bibaHomufinalSheet.getRange('D' + (bibaHomufinalSheetLastRow + 1)).setValue(formData.denpyouBangoSelect);
+  }
   //fill the final output spreadsheet with specific data
-  bibaHomufinalSheet.getRange('F' + (indexofDenpyouBango + 1)).setValue(formData.shiyouBi);
-  bibaHomufinalSheet.getRange('G' + (indexofDenpyouBango + 1)).setValue(formData.shiyouBasho);
-  bibaHomufinalSheet.getRange('H' + (indexofDenpyouBango + 1)).setValue(formData.koujiBangou);
-  bibaHomufinalSheet.getRange('I' + (indexofDenpyouBango + 1)).setValue(formData.shiyoSya);
-  bibaHomufinalSheet.getRange('J' + (indexofDenpyouBango + 1)).setValue(respondentEmail);
-  bibaHomufinalSheet.getRange('K' + (indexofDenpyouBango + 1)).setValue(bibaFileUrl);
-  bibaHomufinalSheet.getRange('L' + (indexofDenpyouBango + 1)).setValue('承認待ち');
+  bibaHomufinalSheet.getRange('F' + (bibaHomufinalSheetLastRow + 1)).setValue(formData.shiyouBasho);
+  bibaHomufinalSheet.getRange('G' + (bibaHomufinalSheetLastRow + 1)).setValue(formData.koujiBangou);
+  bibaHomufinalSheet.getRange('H' + (bibaHomufinalSheetLastRow + 1)).setValue(formData.shiyoSya);
+  bibaHomufinalSheet.getRange('I' + (bibaHomufinalSheetLastRow + 1)).setValue(respondentEmail);
+  bibaHomufinalSheet.getRange('J' + (bibaHomufinalSheetLastRow + 1)).setValue(bibaFileUrl);
+  bibaHomufinalSheet.getRange('K' + (bibaHomufinalSheetLastRow + 1)).setValue('承認待ち');
 
-  const htmlFormEmail = htmlTemplate.evaluate().getContent();
   //var ccRecipient = "abc@uretek.co.jp";
-  GmailApp.sendEmail("santosh.l@uretek.co.jp", "ビバホームレンタルフォームから", "", {
-    //'cc': ccRecipient,
-    htmlBody: htmlFormEmail,
-    replyTo: respondentEmail
-  });
+  if(denpyouBangoArray.indexOf(searchDenpyouBango) != -1){
+    let seibanValue = bibaHomuSheet1.getRange('A' + (bibaHomuSheet1LastRow + 1)).getValue();
+    let konyuHidzukeValue = bibaHomuSheet1.getRange('B' + (bibaHomuSheet1LastRow + 1)).getValue();
+    let kingakuValue = bibaHomuSheet1.getRange('C' + (bibaHomuSheet1LastRow + 1)).getValue();
+    let shiyouTenpoValue = bibaHomuSheet1.getRange('F' + (bibaHomuSheet1LastRow + 1)).getValue();
+
+    const htmlTemplate = HtmlService.createTemplateFromFile("mailToHomBuchyo");
+    //send to create Html template to send through gmail
+    htmlTemplate.saiban = seibanValue;
+    htmlTemplate.konyuHidzuke = konyuHidzukeValue;
+    htmlTemplate.kingaku = kingakuValue;
+    
+    if(formData.denpyouBangoSelect == '伝票番号無し'){
+      htmlTemplate.denpyouBango = formData.denpyouBangoFill;
+    }else{
+      htmlTemplate.denpyouBango = formData.denpyouBangoSelect;
+    }
+    htmlTemplate.shiyouTenpo = shiyouTenpoValue;
+    htmlTemplate.shiyouBasho = formData.shiyouBasho;
+    htmlTemplate.koujiBangou = formData.koujiBangou;
+    htmlTemplate.shiyoSya = formData.shiyoSya;
+    htmlTemplate.respondentEmail = respondentEmail;
+    htmlTemplate.bibaFileUrl = bibaFileUrl;
+    htmlTemplate.formUrl = formUrl;
+
+    const htmlFormEmail = htmlTemplate.evaluate().getContent();
+    GmailApp.sendEmail("santosh.l@uretek.co.jp", "ビバホームレンタルフォームから", "", {
+      //'cc': ccRecipient,
+      htmlBody: htmlFormEmail,
+      replyTo: respondentEmail
+    });
+  }
 }
 
 function formatNumberWithLeadingZeros(number, desiredLength) {
@@ -270,11 +295,10 @@ function createNewForm() {
 
 function getDenpyoBangoList(){
    const ss = SpreadsheetApp.openById('1eTquTEPg7nmC2DzG3Dxx3YZJtwFyKFtRHvhFEGIyc2s');
-   Logger.log('ss' + ss);
    const bibahomuSheet = ss.getSheetByName("ビバホームレコードシート1");
    const denpyoBangoList = bibahomuSheet.getRange("D2:E" + bibahomuSheet.getLastRow()).getValues();
    var denpyoBangoSelect = [];
-
+   denpyoBangoSelect.push('伝票番号無し');
    denpyoBangoList.forEach(row => {
       if (row[0] === "AVAIL") { // Check if the value in column F is "AVAIL"
          denpyoBangoSelect.push(row[1]); // Push the corresponding value from column E
@@ -283,3 +307,4 @@ function getDenpyoBangoList(){
 
    return denpyoBangoSelect;
 }
+

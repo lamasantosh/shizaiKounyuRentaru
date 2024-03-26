@@ -1,0 +1,102 @@
+<script>
+    const wholeFormWrap = document.getElementById("whole-contact-form");
+    const contactFormSonota = document.getElementById("contact-form-sonota");
+    const successMessageSonota = document.getElementById("success-message");
+    const backToForm = document.getElementById("back-to-form");
+    const progress = document.getElementById("progress");
+  
+    contactFormSonota.addEventListener("submit", submitRentaruSonotaData);
+    
+    function submitRentaruSonotaData(e){
+      e.preventDefault();
+    }
+  
+    function addSonotaRecord(){
+      const fileInput = document.getElementById("tenpuFileSonota");
+      const file = fileInput.files[0];
+      if(file){
+        showOverlay();
+        const reader = new FileReader();
+        reader.onload = function (event) {
+          const fileData = event.target.result.split(",");
+          const obj = {
+            fileName: file.name,
+            mimeType: file.type,
+            data: fileData[1],
+          };
+    
+          console.log("File object:", obj);
+    
+          // Upload the file to Google Apps Script and retrieve its URL
+          google.script.run
+            .withSuccessHandler((url) => {
+              hideOverlay();
+              console.log("File URL:", url);
+              // Once the file URL is retrieved, hide the form and show progress
+              wholeFormWrap.classList.add("d-none");
+              progress.classList.remove("d-none");
+              // Construct the form data including the file URL
+              const formData = constructSonotaData(url);
+    
+              console.log("Form data:", formData);
+    
+              // Pass formData to Google Apps Script function
+              submitSonotaData(formData);
+            })
+            .withFailureHandler(() => {
+              // Handle failure during file upload
+              console.error("Error occurred while uploading file.");
+              alert("Error occurred while uploading file.");
+              progress.classList.add("d-none");
+            })
+            .uploadSonotaFile(obj); // Call the uploadBibaHomuFile function to upload the file
+        };
+    
+        reader.readAsDataURL(file); // Read file as data URL
+      }else{
+        wholeFormWrap.classList.add("d-none");
+        progress.classList.remove("d-none");
+        // If no file is uploaded, directly submit the form data without the file URL
+        const formData = constructSonotaData('null');
+        submitSonotaData(formData);
+      }
+    }
+    function constructSonotaData(fileUrl){
+      return {
+        konyuHidzukeSonota: document.getElementById("konyuHidzukeSonota").value,
+        shiyouBistartDate: document.getElementById("shiyouBistartDate").value,
+        shiyouBiendDate: document.getElementById("shiyouBiendDate").value,
+        shiireSakiSonota: document.getElementById("shiireSakiSonota").value,
+        shiyouBashoSonota: document.getElementById("shiyouBashoSonota").value,
+        koujiBangouSonota: document.getElementById("koujiBangouSonota").value,
+        ringiNoSonota: document.getElementById("ringiNoSonota").value,
+        naiyoukattaMono: document.getElementById("naiyoukattaMono").value,
+        naiyouNaniTsukau: document.getElementById("naiyouNaniTsukau").value,
+        kingakuSonota: document.getElementById("kingakuSonota").value,
+        tenpuFileSonota: fileUrl, // Add the file URL if available
+      };
+    }
+    function submitSonotaData(formData) {
+      // Pass formData to Google Apps Script function
+      google.script.run
+        .withSuccessHandler(() => {
+          // Reset form and show success message
+          contactFormSonota.reset();
+          successMessage.classList.remove("d-none");
+          progress.classList.add("d-none");
+        })
+        .withFailureHandler(() => {
+          // Handle failure
+          console.error("Error occurred while submitting form.");
+          alert("Error occurred while submitting form.");
+          progress.classList.add("d-none");
+        })
+        .acceptSonotaData(formData);
+    }
+  
+    // it will help to back to the form when we submit our form
+    backToForm.addEventListener("click", () => {
+      wholeFormWrap.classList.remove("d-none");
+      successMessage.classList.add("d-none");
+    });
+  </script>
