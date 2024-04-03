@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+  </head>
+  <body>
+    <table>
+      <thread>
+      </thread>
+      <tbody>
+        <tr>
+          <td style="font-weight:500;color: #4169e1;width:20%;">採番:</td>
+          <td><?= saiban ?></td>
+        </tr>
+        <tr>
+          <td style="font-weight:500;color: #4169e1;width:20%;">購入日／発注日:</td>
+          <td><?= konyuHidzukeSonota ?></td>
+        </tr>
+        <tr>
+          <td style="font-weight:500;color: #4169e1;width:20%;">レンタル開始日:</td>
+          <td><?= shiyouBistartDate ?></td>
+        </tr>
+        <tr>
+          <td style="font-weight:500;color: #4169e1;width:20%;">レンタル終了日:</td>
+          <td><?= shiyouBiendDate ?></td>
+        </tr>
+
+        <? if(shiireSakiSonota != '') { ?>
+        <tr>
+          <td style="font-weight:500;color: #4169e1;width:20%;">購入レンタル会社:</td>
+          <td><?= shiireSakiSonota ?></td>
+        </tr>
+        <? } ?>
+        <? if(shiyouBashoSonota != '') { ?>
+        <tr>
+          <td style="font-weight:500;color: #4169e1;width:20%;">使用場所:</td>
+          <td><?= shiyouBashoSonota ?></td>
+        </tr>
+        <? } ?>
+        <? if(koujiBangouSonota != '') { ?>
+        <tr>
+          <td style="font-weight:500;color: #4169e1;width:20%;">工事番号:</td>
+          <td><?= koujiBangouSonota ?></td>
+        </tr>
+        <? } ?>
+        <? if(ringiNoSonota != '') { ?>
+        <tr>
+          <td style="font-weight:500;color: #4169e1;width:20%">稟議№ :</td>
+          <td><?= ringiNoSonota ?></td>
+        </tr>
+        <? } ?>
+         <? if(naiyouKattaMono != '') { ?>
+        <tr>
+          <td style="font-weight:500;color: #4169e1;width:20%;">買った物や何に使う物など連絡詩語（内容）:</td>
+          <td><?= naiyouKattaMono ?></td>
+        </tr>
+         <? } ?>
+        <? if(kingakuSonota != '') { ?>
+           <tr>
+            <td style="font-weight:500;color: #4169e1;width:20%;">金額:</td>
+            <td><?= kingakuSonota ?></td>
+           </tr>
+        <? } ?>
+
+        <? if(tenpuFileSonota1 != '' && tenpuFileSonota1 != 'null') { ?>
+           <tr>
+            <td style="font-weight:500;color: #4169e1;width:20%;">ビバファイルurl:</td>
+            <td><?= tenpuFileSonota1 ?></td>
+           </tr>
+        <? } ?>
+        <? if(tenpuFileSonota2 != '' && tenpuFileSonota2 != 'null') { ?>
+           <tr>
+            <td style="font-weight:500;color: #4169e1;width:20%;">ビバファイルurl:</td>
+            <td><?= tenpuFileSonota2 ?></td>
+           </tr>
+        <? } ?>
+        <? if(tenpuFileSonota3 != '' && tenpuFileSonota3 != 'null') { ?>
+           <tr>
+            <td style="font-weight:500;color: #4169e1;width:20%;">ビバファイルurl:</td>
+            <td><?= tenpuFileSonota3 ?></td>
+           </tr>
+        <? } ?>
+        <tr>
+          <td colspan="2" style="padding-top: 10px;font-weight:600;">下記リンクから承認お願いします。</td>
+        </tr>
+        <tr>
+          <td colspan="2"><?= feedbackUrl ?></td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
