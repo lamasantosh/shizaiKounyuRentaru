@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- Metro UI -->
+    <!-- <link rel="stylesheet" href="https://cdn.metroui.org.ua/current/metro.css"> -->
+    <?!= include('style'); ?>
+    <style>
+      .custom-margin-bottom-label{
+        margin-bottom: .5rem;
+        font-weight:600;
+        display:block;
+      }
+      .c-margin-bottom{
+        margin-bottom: .5rem;
+      }
+      .showHideTag{
+        display:none;
+      }
+      @media screen and (min-width: 768px) {
+      .container-small{
+        width:700px;
+        margin:0 auto;
+      }
+      }
+    </style>
+    <style>
+    .spinner {
+      position: fixed;
+      z-index: 9999;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .lds-dual-ring {
+      display: inline-block;
+      width: 80px;
+      height: 80px;
+    }
+
+    .lds-dual-ring:after {
+      content: " ";
+      display: block;
+      width: 64px;
+      height: 64px;
+      margin: 8px;
+      border-radius: 50%;
+      border: 6px solid #3498db;
+      border-color: #3498db transparent #3498db transparent;
+      animation: lds-dual-ring 1.2s linear infinite;
+    }
+
+    @keyframes lds-dual-ring {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="grid">
+        <div class="row mb-5" >
+          <div class="cell" style="text-align:center;">
+            <div class="card" style="background-color:#095AA9;color:#ffffff;">
+              <h1 style="padding:.5rem;">資材購入レンタル更新</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Overlay with loading spinner -->
+    <div class="overlay" id="overlay">
+      <div class="spinner">
+        <!-- Loading spinner without image -->
+        <div class="lds-dual-ring"></div>
+      </div>
+    </div>
+    <div class="container-small">
+    <!-- content here -->
+      <!-- Grouping rows -->
+      <div class="grid" id="whole-contact-wrap">
+          <div class="row p-5 mb-5" style="border:1px solid #bcbcbc;">
+              <div class="cell">
+                <?!= include('konyuSonotaUpdateForm'); ?>
+              </div>
+          </div>
+      </div>
+      <div class="row p-5 d-none" id="success-message" style="border:1px solid #bcbcbc;">
+        <div class="cell flex-align-self-center">
+          <div class="card">
+              <div class="card-header">
+                更新完了しました。
+              </div>
+              <div class="card-content p-2">
+                <span style= "font-size:1.5rem;padding:1rem 0rem;">
+                  フォームを送信していただきありがとうございます
+                <span>
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="row p-5 d-none" id="error-message" style="border:1px solid #d3526a;">
+        <div class="cell flex-align-self-center">
+          <h3 style="display:block;padding-bottom:1rem;border-bottom:2px solid #bcbcbc;color:#e7193e;">このIDはもう承認いただきましたので修正は出来ません。</h3>
+        </div>
+      </div>
+      <div class="row p-5 d-none" id="error-message" style="border:1px solid #d3526a;">
+        <div class="card">
+            <div class="card-header">
+              もう承認しましたのでフェッドバックは出来ないです。
+            </div>
+            <div class="card-content p-2">
+              <h4 style="display:block;padding-bottom:1rem;color:#e7193e;margin:1rem 0rem;">このIDはもう承認いただきましたので修正出来ない。</h4>
+            </div>
+        </div>
+      </div>
+      <div class="row d-none" id="progress">
+        <div class="cell">
+            <div data-role="progress" data-type="line"></div>
+            <div data-role="progress" data-type="line" data-small="true"></div>
+        </div>
+      </div>
+    </div>
+    <!-- Metro UI -->
+    <!-- <script src="https://cdn.metroui.org.ua/current/metro.js"></script> -->
+    <?!= include('script'); ?>
+    <script>
+      let checkWholeFormWrap = document.getElementById("whole-contact-wrap");
+      let checkErrorMessage = document.getElementById("error-message");
+
+      var formData = <?= JSON.stringify(formData) ?>;
+      console.log('formData' + formData);
+      if(formData == '"更新出来ない"'){
+          checkWholeFormWrap.classList.add('d-none');
+          checkErrorMessage.classList.remove("d-none");
+      }else if(formData != 'null'){
+        // Remove square brackets and double quotes, then split by commas
+        var formDataArray = formData.replace(/[\[\]"]/g, '').split(',');
+        for(let i=0; i<formDataArray.length; i++){
+          console.log('formDataArray ' + i + ':' + formDataArray[i]);
+        }
+        //console.log('formDataArray.length' + formDataArray.length);
+        document.getElementById('formId').value = formDataArray[15] || '';
+        document.getElementById('showSaiban').innerHTML = formDataArray[0] || '';
+        document.getElementById('konyuHidzukeSonota').value = formDataArray[1] || '';
+        document.getElementById('shiyouBistartDate').value = formDataArray[2] || '';
+        document.getElementById('shiyouBiendDate').value = formDataArray[3] || '';
+        document.getElementById('shiireSakiSonota').value = formDataArray[4] || '';
+        document.getElementById('shiyouBashoSonota').value = formDataArray[5] || '';
+        document.getElementById('koujiBangouSonota').value = formDataArray[6] || '';
+        document.getElementById('ringiNoSonota').value = formDataArray[7] || '';
+        document.getElementById('naiyouKattaMono').value = formDataArray[8] || '';
+        document.getElementById('kingakuSonota').value = formDataArray[9] || '';
+        console.log(formDataArray[11]);
+        if(formDataArray[11] != ''){
+          document.getElementById('holdPreviousFileLink1').href = formDataArray[11] || '';
+        }else{
+          document.getElementById('holdPreviousFileLink1').href = '';
+          document.getElementById('holdPreviousFileLink1').classList.add('showHideTag');
+          document.getElementById("removeFileLink1").classList.add('showHideTag');
+        }
+        if(formDataArray[12] != ''){
+          document.getElementById('holdPreviousFileLink2').href = formDataArray[12] || '';
+        }else{
+          document.getElementById('holdPreviousFileLink2').href = '';
+          document.getElementById('holdPreviousFileLink2').classList.add('showHideTag');
+          document.getElementById("removeFileLink2").classList.add('showHideTag');
+        }
+        if(formDataArray[13] != ''){
+          document.getElementById('holdPreviousFileLink3').href = formDataArray[13] || '';
+        }else{
+          document.getElementById('holdPreviousFileLink3').href = '';
+          document.getElementById('holdPreviousFileLink3').classList.add('showHideTag');
+          document.getElementById("removeFileLink3").classList.add('showHideTag');
+        }
+
+      }else{}
+    </script>
+    <script>
+      // Show the overlay when needed
+      function showOverlay() {
+        document.getElementById('overlay').style.display = 'block';
+      }
+      // Hide the overlay when done processing
+      function hideOverlay() {
+        document.getElementById('overlay').style.display = 'none';
+      }
+      hideOverlay();
+    </script>
+    <?!= include('konyuSonotaScript'); ?>
+  </body>
+</html>
