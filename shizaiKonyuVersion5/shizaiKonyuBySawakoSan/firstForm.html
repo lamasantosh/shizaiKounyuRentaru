@@ -1,0 +1,59 @@
+<h3 style="padding-bottom:.5rem;border-bottom:1px solid #ddd5d5f5;">ビバホームフォーム１</h3>
+<form id="contact-form" data-role="validator" action="javascript:"
+      data-on-submit="addfirstBibaHomuRecord">
+  <!--伝票番号選択-->
+  <div class="row c-margin-bottom">
+    <div class="cell">
+        <span class="custom-margin-bottom-label">伝票番号選択:</span>
+        <select id="denpyouBangoSelect" data-role="select" name="denpyouBangoSelect" data-validate="required not=''">
+            <optgroup label="伝票番号リスト:">
+                <!-- Options will be dynamically added here -->
+            </optgroup>
+        </select>
+    </div>
+  </div>
+  <!--伝票番号記入-->
+  <div class="row c-margin-bottom " id="denpyouBangoFillWrap">
+    <div class="cell">
+      <span class="custom-margin-bottom-label">伝票番号記入:</span>
+      <input type="text" class="metro-input" id="denpyouBangoFill" name="denpyouBangoFill" autocomplete="off" data-validate="required"/>
+       <span class="invalid_feedback">
+            伝票番号必須必須です。
+        </span>
+    </div>
+  </div>
+  <!-- 購入日／発注日 -->
+  <div class="row c-margin-bottom">
+    <div class="cell">
+      <div class="form-group">
+        <span class="custom-margin-bottom-label">購入日／発注日:</span>
+        <input type="text" data-role="calendarpicker" data-dialog-mode="true" id="konyuHidzuke" name="konyuHidzuke" data-validate="required">
+        <span class="invalid_feedback">
+            購入日／発注日は必須です。
+        </span>
+      </div>
+    </div>
+  </div>
+   <!-- 金額 -->
+  <div class="row c-margin-bottom">
+    <div class="cell">
+      <span class="custom-margin-bottom-label">金額:</span>
+      <input type="text" class="metro-input" id="kingaku" name="kingaku" autocomplete="off"/>
+    </div>
+  </div>
+  <!-- 使用店舗 -->
+  <div class="row c-margin-bottom">
+    <div class="cell">
+      <span class="custom-margin-bottom-label">使用店舗:</span>
+      <input type="text" class="metro-input" id="shiyouTenpo" name="shiyouTenpo" autocomplete="off" />
+    </div>
+  </div>
+  
+  <div class="row c-margin-bottom">
+    <div class="cell" style="text-align:center;">
+      <div class="form-group">
+        <button class="button primary" style="padding:0rem 2rem;">送信</button>
+      </div>
+    </div>
+  </div>
+</form>

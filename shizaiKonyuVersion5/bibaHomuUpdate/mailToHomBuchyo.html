@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+  </head>
+  <body>
+    <table>
+      <thread>
+      </thread>
+      <tbody>
+          <tr>
+            <td style="font-weight:500;color: #4169e1;width:20%;">採番:</td>
+            <td><?= saiban ?></td>
+          </tr>
+          <tr>
+            <td style="font-weight:500;color: #4169e1;width:20%;">使用者メール:</td>
+            <td><?= respondentEmail ?></td>
+          </tr>
+          <tr>
+            <td style="font-weight:500;color: #4169e1;width:20%;">購入日:</td>
+            <td><?= konyuHidzuke ?></td>
+          </tr>
+        <? if(shiyouBasho != '') { ?>
+          <tr>
+            <td style="font-weight:500;color: #4169e1;width:20%;">使用場所:</td>
+            <td><?= shiyouBasho ?></td>
+          </tr>
+        <? } ?>
+        <? if(koujiBangou != '') { ?>
+          <tr>
+            <td style="font-weight:500;color: #4169e1;width:20%;">工事番号:</td>
+            <td><?= koujiBangou ?></td>
+          </tr>
+        <? } ?>
+        <? if(kingaku != '') { ?>
+          <tr>
+            <td style="font-weight:500;color: #4169e1;width:20%">金額:</td>
+            <td><?= kingaku ?></td>
+          </tr>
+        <? } ?>
+         <? if(denpyouBango != '') { ?>
+          <tr>
+            <td style="font-weight:500;color: #4169e1;width:20%;">伝票番号:</td>
+            <td><?= denpyouBango ?></td>
+          </tr>
+         <? } ?>
+        <? if(shiyouTenpo != '') { ?>
+          <tr>
+            <td style="font-weight:500;color: #4169e1;width:20%;">使用店舗:</td>
+            <td><?= shiyouTenpo ?></td>
+          </tr>
+        <? } ?>
+
+        <? if(bibaHomutenpuFile != '' && bibaHomutenpuFile != 'null') { ?>
+          <tr>
+          <td style="font-weight:500;color: #4169e1;width:20%;">ビバファイルurl:</td>
+          <td><?= bibaHomutenpuFile ?></td>
+          </tr>
+        <? } ?>
+
+        <tr>
+          <td colspan="2" style="padding-top: 10px;font-weight:600;">下記リンクから承認お願いします。</td>
+        </tr>
+        <tr>
+          <td colspan="2"><?= feedbackUrl ?></td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

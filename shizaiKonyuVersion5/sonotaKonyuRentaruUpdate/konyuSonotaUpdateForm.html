@@ -1,0 +1,157 @@
+<h3 style="padding-bottom:.5rem;border-bottom:1px solid #ddd5d5f5;">資材購入レンタル(その他)フォーム</h3>
+<form id="contact-form-sonota" data-role="validator" action="javascript:"
+      data-on-submit="addSonotaRecord">
+  <div class="row">
+    <div class="cell">
+      <!-- Other form fields go here -->
+      <input type="hidden" id="formId" name="formId" value="">
+    </div>
+  </div>
+  <!--金額-->
+  <div class="row c-margin-bottom">
+    <div class="cell">
+      <div class="seiban-wrap">
+        <span>製番:</span>
+        <span id="showSaiban"></span>
+      </div>
+    </div>
+  </div>
+  <!--購入日／発注日-->
+  <div class="row c-margin-bottom">
+    <div class="cell">
+      <div class="form-group">
+        <span class="custom-margin-bottom-label">購入日／発注日:</span>
+        <input type="text" data-role="calendarpicker" data-dialog-mode="true" id="konyuHidzukeSonota" name="konyuHidzukeSonota" data-validate="required">
+        <span class="invalid_feedback">
+            購入日／発注日必要です。
+        </span>
+      </div>
+    </div>
+  </div>
+  <!--使用期間-->
+  <div class="row c-margin-bottom">
+    <div class="cell">
+      <div class="form-group">
+        <span class="custom-margin-bottom-label">レンタル開始日:</span>
+        <input type="text" data-role="calendarpicker" data-dialog-mode="true" id="shiyouBistartDate" name="shiyouBistartDate"/>
+      </div>
+    </div>
+    <!--レンタル終了日-->
+    <div class="cell">
+      <div class="form-group">
+        <span class="custom-margin-bottom-label">レンタル終了日:</span>
+        <input type="text" data-role="calendarpicker" data-dialog-mode="true" id="shiyouBiendDate" name="shiyouBiendDate"/>
+      </div>
+    </div>
+  </div>
+  <!--仕入先-->
+  <div class="row c-margin-bottom">
+    <div class="cell">
+        <span class="custom-margin-bottom-label">仕入先（購入レンタル会社）:</span>
+        <input type="text" class="metro-input" id="shiireSakiSonota" name="shiireSakiSonota" data-validate="required" autocomplete="off"/>
+    </div>
+  </div>
+  <!--使用場所の始まり-->
+  <div class="row c-margin-bottom" style="padding:.5rem;border:1px solid #bcbcbc;">
+    <div class="cell">
+      <div class="row c-margin-bottom">
+        <div class="cell">
+          <span class="custom-margin-bottom-label">使用場所:</span>
+          <input type="text" class="metro-input" id="shiyouBashoSonota" name="shiyouBashoSonota" autocomplete="off"/>
+        </div>
+      </div>
+      <div class="row c-margin-bottom">
+        <div class="cell">
+          <span class="custom-margin-bottom-label">工事番号:</span>
+          <input type="text" class="metro-input" id="koujiBangouSonota" name="koujiBangouSonota" autocomplete="off"/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--稟議№-->
+  <div class="row c-margin-bottom">
+    <div class="cell">
+      <span class="custom-margin-bottom-label">稟議№ (稟議申請している場合):</span>
+      <input type="text" class="metro-input" id="ringiNoSonota" name="ringiNoSonota" autocomplete="off"/>
+    </div>
+  </div>
+  <!--内容-->
+  <!--内容-->
+  <div class="row c-margin-bottom" style="padding:.5rem 0rem;">
+    <div class="cell">
+      <div class="row c-margin-bottom">
+        <div class="cell">
+          <span style="display:block;border-bottom:2px solid #bcbcbc;font-size:1.2rem;font-weight:600;">--内容--</span>
+        </div>
+      </div>
+      <div class="row c-margin-bottom">
+        <div class="cell">
+          <label for="naiyouKattaMono" class="custom-margin-bottom-label">買った物や何に使う物など連絡詩語:</label>
+          <textarea data-role="textarea" name="naiyouKattaMono" id="naiyouKattaMono"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row c-margin-bottom">
+    <div class="cell">
+      <span class="custom-margin-bottom-label">金額:</span>
+      <input type="text" class="metro-input" id="kingakuSonota" name="kingakuSonota" autocomplete="off"/>
+    </div>
+  </div>
+  <!-- File upload section -->
+  <div class="row c-margin-bottom" style="padding:.5rem 0rem;">
+    <div class="cell">
+      <div class="row c-margin-bottom">
+        <div class="cell">
+          <span style="display:block;border-bottom:2px solid #bcbcbc;font-size:1.2rem;font-weight:600;">レシートの添付（その場でカメラで撮ったものを添付）</span>
+        </div>
+      </div>
+      <!--hold previous file 1-->
+      <div class="row">
+        <div class="cell">
+          <a href="" target="_blank" id="holdPreviousFileLink1">前のレシート添付1の表示</a>
+          <button type="button" class="button alert outline small" id="removeFileLink1">リンクの削除</button>
+        </div>
+      </div>
+      <div class="row c-margin-bottom">
+        <div class="cell">
+          <span class="custom-margin-bottom-label">レシート添付1</span>
+          <input type="file" data-role="file" data-button-title="アップロード" id="tenpuFileSonota1" name="tenpuFileSonota1">
+        </div>
+      </div>
+      <!--hold previous file 2-->
+      <div class="row">
+        <div class="cell">
+          <a href="" target="_blank" id="holdPreviousFileLink2">前のレシート添付2の表示</a>
+          <button type="button" class="button alert outline small" id="removeFileLink2">リンクの削除</button>
+        </div>
+      </div>
+      <div class="row c-margin-bottom">
+        <div class="cell">
+          <span class="custom-margin-bottom-label">レシート添付2</span>
+          <input type="file" data-role="file" data-button-title="アップロード" id="tenpuFileSonota2" name="tenpuFileSonota2">
+        </div>
+      </div>
+      <!--hold previous file 3-->
+      <div class="row">
+        <div class="cell">
+          <a href="" target="_blank" id="holdPreviousFileLink3">前のレシート添付3の表示</a>
+          <button type="button" class="button alert outline small" id="removeFileLink3">リンクの削除</button>
+        </div>
+      </div>
+      <div class="row c-margin-bottom">
+        <div class="cell">
+          <span class="custom-margin-bottom-label">レシート添付3</span>
+          <input type="file" data-role="file" data-button-title="アップロード" id="tenpuFileSonota3" name="tenpuFileSonota3">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row c-margin-bottom">
+    <div class="cell" style="text-align:center;">
+      <div class="form-group">
+        <button class="button primary" style="padding:0rem 2rem;">送信</button>
+      </div>
+    </div>
+  </div>
+</form>
